@@ -6,10 +6,7 @@ const fs = require("fs");
 function fileToArray() {
     const text = fs.readFileSync("../data/text.txt", "utf-8")
         .split(" ");
-    const dotToNone = _.map(text, function (n) {
-        return (n== ".") ? null : n;
-    })
-    const removeUndefined = _.filter(dotToNone, (n) => n !== "" && n != undefined);
+    const removeUndefined = _.filter(text, (n) => n !== "" && n != undefined);
     return removeUndefined;
 }
 
@@ -33,15 +30,29 @@ const listOfObjects = noDuplicates.map((n) =>  n = new Word(n));
 
 buildChain(listOfObjects,data);
 
-function makeSentence(node,howLong, sentence = "") {
+function makeSentence(node,limiter, sentence = "") {
     const takeRandom = node.next[Math.floor(Math.random() * node.next.length)];
-    if(howLong > 0) {
-        return (node.key == null ) ? sentence : makeSentence(takeRandom,howLong-1, (`${sentence} ${node.key}`));
+    if(node.key == "." || node.key == "!" || node.key == "?") return (`${sentence}${node.key}`)
+    if(limiter > 0) {
+        return (node.key == "." || node.key == "!" || node.key == "?") ? (`${sentence}${node.key}`) : makeSentence(takeRandom,limiter-1, (`${sentence} ${node.key}`));
     }
     else {
-        return sentence;
+        const endOfWord = _.find(node.next,{key: "!" || "?" || "."})
+        if(endOfWord != undefined){
+            return makeSentence(endOfWord,limiter,(`${sentence} ${node.key}`))
+        }
+        else {
+            makeSentence(takeRandom,limiter-1, (`${sentence} ${node.key}`))
+        }
     }
 }
 
-const sentence1 = makeSentence(listOfObjects[53],10);
-console.log(sentence1);
+function printSentences(n) {
+    _.forEach(_.range(0,n), _ => {
+        console.log(makeSentence(listOfObjects[Math.floor(Math.random() * listOfObjects.length)],20))
+        console.log()
+    })
+}
+
+
+printSentences(10);
