@@ -33,13 +33,15 @@ const listOfObjects = noDuplicates.map((n) =>  n = new Word(n));
 
 buildChain(listOfObjects,data);
 
-function makeSentence(node, sentence = "") {
-    console.log("key",node.key);
+function makeSentence(node,howLong, sentence = "") {
     const takeRandom = node.next[Math.floor(Math.random() * node.next.length)];
-    console.log("next",takeRandom.key);
-    return (node.key == null ) ? sentence : makeSentence(takeRandom, (`${sentence} ${node.key}`));
+    if(howLong > 0) {
+        return (node.key == null ) ? sentence : makeSentence(takeRandom,howLong-1, (`${sentence} ${node.key}`));
+    }
+    else {
+        return sentence;
+    }
 }
 
-// const sentence1 = makeSentence(listOfObjects[123]);
-// console.log(sentence1);
-console.log(_.find(listOfObjects, {key: null}));
+const sentence1 = makeSentence(listOfObjects[53],10);
+console.log(sentence1);
