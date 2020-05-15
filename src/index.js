@@ -25,9 +25,9 @@ function Word(key) {
 
 function makeSentence(node,limiter, sentence = "") {
     const takeRandom = node.next[Math.floor(Math.random() * node.next.length)];
-    if(node.key == "." || node.key == "!" || node.key == "?") return (`${sentence}${node.key}`)
+    if(node.key == "." || node.key == "!" || node.key == "?") return (`${sentence}${node.key}`);
     if(limiter > 0) {
-        return (node.key == "." || node.key == "!" || node.key == "?") ? (`${sentence}${node.key}`) : makeSentence(takeRandom,limiter-1, (`${sentence} ${node.key}`));
+        return makeSentence(takeRandom,limiter-1, (`${sentence} ${node.key}`));
     }
     else {
         const endOfWord = _.find(node.next,{key: "!" || "?" || "."});
@@ -35,16 +35,16 @@ function makeSentence(node,limiter, sentence = "") {
             return makeSentence(endOfWord,limiter,(`${sentence} ${node.key}`));
         }
         else {
-            makeSentence(takeRandom,limiter-1, (`${sentence} ${node.key}`));
+            return makeSentence(takeRandom,limiter, (`${sentence} ${node.key}`));
         }
     }
 }
 
 function printSentences(listOfObjects,n,highLimiter,lowLimiter) {
-    _.forEach(_.range(0,n), _ => {
+    _.forEach(_.range(0,n), () => {
         const randomNumber = Math.floor(Math.random() * listOfObjects.length);
         const randomWord = listOfObjects[randomNumber];
-        const sentence = makeSentence(listOfObjects[Math.floor(Math.random() * listOfObjects.length)],highLimiter);
+        const sentence = makeSentence(randomWord,highLimiter);
         if(typeof sentence != "undefined") if(sentence.split(" ").length > lowLimiter ) {
             console.log(sentence);
             console.log();
