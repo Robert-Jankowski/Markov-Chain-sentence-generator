@@ -5,13 +5,12 @@ const fs = require("fs");
 
 function fileToArray() {
     const text = fs.readFileSync("../data/text.txt", "utf-8")
-        .replace("-","")
-        .replace(",","")
-        .replace("."," .")
-        .replace("--","")
         .split(" ");
-
-    return text
+    const dotToNone = _.map(text, function (n) {
+        return (n=== ".") ? null : n;
+    })
+    return dotToNone;
 }
 
-const data = fileToArray()
+const data = fileToArray();
+const noDuplicates = [... new Set(data)].filter((n) => (n!== null));
