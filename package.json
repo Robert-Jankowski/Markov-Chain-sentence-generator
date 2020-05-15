@@ -6,6 +6,7 @@
   "author": "Robert <robert.jankowski.kontakt@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.19.2",
     "eslint": "^7.0.0",
     "lodash": "^4.17.15",
     "nodemon": "^2.0.4"
