@@ -1,13 +1,9 @@
 "use strict";
-
 const _ = require("lodash");
 const fs = require("fs");
 
 function fileToArray() {
-    const text = fs.readFileSync("../data/text.txt", "utf-8")
-        .split(" ");
-    const removeUndefined = _.filter(text, (n) => n !== "" && n != undefined);
-    return removeUndefined;
+    return fs.readFileSync("../data/text.txt", "utf-8").split(" ");
 }
 
 function buildChain(listOfObjects,data) {
@@ -17,18 +13,15 @@ function buildChain(listOfObjects,data) {
          listOfObjects[current].next = [...listOfObjects[current].next, listOfObjects[following]];
     });
 }
+function buildListOfObjects(data) {
+    const noDuplicates = [... new Set(data)];
+    return _.map(noDuplicates,(n) =>  n = new Word(n))
+}
 
 function Word(key) {
     this.key = key;
     this.next = [];
 }
-
-const data = fileToArray();
-const noDuplicates = [... new Set(data)];
-
-const listOfObjects = noDuplicates.map((n) =>  n = new Word(n));
-
-buildChain(listOfObjects,data);
 
 function makeSentence(node,limiter, sentence = "") {
     const takeRandom = node.next[Math.floor(Math.random() * node.next.length)];
@@ -37,22 +30,29 @@ function makeSentence(node,limiter, sentence = "") {
         return (node.key == "." || node.key == "!" || node.key == "?") ? (`${sentence}${node.key}`) : makeSentence(takeRandom,limiter-1, (`${sentence} ${node.key}`));
     }
     else {
-        const endOfWord = _.find(node.next,{key: "!" || "?" || "."})
+        const endOfWord = _.find(node.next,{key: "!" || "?" || "."});
         if(endOfWord != undefined){
-            return makeSentence(endOfWord,limiter,(`${sentence} ${node.key}`))
+            return makeSentence(endOfWord,limiter,(`${sentence} ${node.key}`));
         }
         else {
-            makeSentence(takeRandom,limiter-1, (`${sentence} ${node.key}`))
+            makeSentence(takeRandom,limiter-1, (`${sentence} ${node.key}`));
         }
     }
 }
 
-function printSentences(n) {
+function printSentences(listOfObjects,n,highLimiter,lowLimiter) {
     _.forEach(_.range(0,n), _ => {
-        console.log(makeSentence(listOfObjects[Math.floor(Math.random() * listOfObjects.length)],20))
-        console.log()
+        const randomNumber = Math.floor(Math.random() * listOfObjects.length);
+        const randomWord = listOfObjects[randomNumber];
+        const sentence = makeSentence(listOfObjects[Math.floor(Math.random() * listOfObjects.length)],highLimiter);
+        if(typeof sentence != "undefined") if(sentence.split(" ").length > lowLimiter ) {
+            console.log(sentence);
+            console.log();
+        }
     })
 }
 
-
-printSentences(10);
+const data = fileToArray();
+const listOfObjects = buildListOfObjects(data);
+buildChain(listOfObjects,data);
+printSentences(listOfObjects,20,20, 3);
