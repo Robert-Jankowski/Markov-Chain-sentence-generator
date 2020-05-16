@@ -33,7 +33,9 @@ Words from previous array are being used as index of Word objects, the one-way c
   -axios (not used yet)
   
 4. How to use
+
 Available functions:
+
   const chainName = chain.fileToChain("file.txt");  -returns array of objects
   chain.printSentences(chainName, n-of sentences, high length limiter, low length limiter); -does not return anything, just print
   const ArrayName = chain.getNextArr(word,chainName);   -returns array of words
