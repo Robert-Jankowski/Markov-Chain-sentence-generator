@@ -1,10 +1,7 @@
 "use strict";
 const _ = require("lodash");
 const fs = require("fs");
-
-function fileToArray() {
-    return fs.readFileSync("../data/text.txt", "utf-8").split(" ");
-}
+const read = require('./read.js');
 
 function buildChain(listOfObjects,data) {
      _.forEach(data, (n,i) => {
@@ -45,14 +42,14 @@ function printSentences(listOfObjects,n,highLimiter,lowLimiter) {
         const randomNumber = Math.floor(Math.random() * listOfObjects.length);
         const randomWord = listOfObjects[randomNumber];
         const sentence = makeSentence(randomWord,highLimiter);
-        if(typeof sentence != "undefined") if(sentence.split(" ").length > lowLimiter ) {
+        if(sentence.split(" ").length > lowLimiter ) {
             console.log(sentence);
             console.log();
         }
     })
 }
 
-const data = fileToArray();
+const data = read.fileToArray();
 const listOfObjects = buildListOfObjects(data);
 buildChain(listOfObjects,data);
 printSentences(listOfObjects,20,20, 3);
