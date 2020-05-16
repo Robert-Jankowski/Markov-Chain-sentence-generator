@@ -48,8 +48,22 @@ function printSentences(listOfObjects,n,highLimiter,lowLimiter) {
         }
     })
 }
+function getNextList(word,listOfObjects) {
+    const node = _.find(listOfObjects,{key: word})
+    return (node == undefined) ? null : _.reduce(node.next, (acc,a) => [...acc, a.key] ,[])
+}
 
-const data = read.fileToArray("harrypotter.txt");
-const listOfObjects = buildListOfObjects(data);
-buildChain(listOfObjects,data);
-printSentences(listOfObjects,20,20, 3);
+function fileToChain(filename) {
+    const data = read.fileToArray(filename);
+    const listOfObjects = buildListOfObjects(data);
+    buildChain(listOfObjects,data);
+    return listOfObjects;
+}
+
+const harrychain = fileToChain("harrypotter.txt");
+const hamletchain = fileToChain("hamlet.txt");
+const lalkachain = fileToChain("lalka.txt");
+
+printSentences(harrychain,5,20, 3);
+printSentences(hamletchain,5,20, 3);
+printSentences(lalkachain,5,20, 3);
