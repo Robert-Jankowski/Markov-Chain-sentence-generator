@@ -38,8 +38,8 @@ Available functions:
   chain.printSentences(chainName, n-of sentences, high length limiter, low length limiter); -does not return anything, just print
   const ArrayName = chain.getNextArr(word,chainName);   -returns array of words
   
-Instruction: 
-  1. Put your .txt file into data directory
-  2. Create chain using fileToChain("yourfile.txt") function
-  3. You can print sentences by using printSentences function
-  4. You can get array of following words using getNextArr function
+    Instruction: 
+    1. Put your .txt file into data directory
+    2. Create chain using fileToChain("yourfile.txt") function
+    3. You can print sentences by using printSentences function
+    4. You can get array of following words using getNextArr function
