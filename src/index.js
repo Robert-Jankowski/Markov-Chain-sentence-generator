@@ -49,7 +49,7 @@ function printSentences(listOfObjects,n,highLimiter,lowLimiter) {
     })
 }
 
-const data = read.fileToArray();
+const data = read.fileToArray("harrypotter.txt");
 const listOfObjects = buildListOfObjects(data);
 buildChain(listOfObjects,data);
 printSentences(listOfObjects,20,20, 3);

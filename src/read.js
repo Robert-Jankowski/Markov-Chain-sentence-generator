@@ -1,8 +1,9 @@
 "use strict";
 const fs = require("fs");
 
-exports.fileToArray = function fileToArray() {
-    return fs.readFileSync("../data/test.txt", "utf-8")
+exports.fileToArray = function fileToArray(fileName) {
+    const newFileName = (`../data/${fileName}`)
+    return fs.readFileSync(newFileName, "utf-8")
         .toLowerCase()
         .replace(/,/g, "")
         .replace(/\./g, ' .')
@@ -10,7 +11,7 @@ exports.fileToArray = function fileToArray() {
         .replace("..."," ")
         .replace(/\)/g,"")
         .replace(/\(/g,"")
-        .replace("- "," ")
+        .replace(/- /g," ")
         .replace(/;/g," ")
         .replace(","," ")
         .replace(/!/g, ' !')
@@ -20,7 +21,7 @@ exports.fileToArray = function fileToArray() {
         .replace(13,"")
         .replace(/\n/g, '')
         .replace(/\r/g, '')
-        .replace("   "," ")
+        .replace(/   /g," ")
         .replace(/  /g," ")
         .split(" ");
 }
