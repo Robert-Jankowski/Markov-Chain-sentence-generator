@@ -1,12 +1,11 @@
 {
-  "name": "Markov-Chain-sentence-generator",
+  "name": "markov-chain-sentence-generator",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/Robert-Jankowski/Markov-Chain-sentence-generator.git",
   "author": "Robert <robert.jankowski.kontakt@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.2",
     "lodash": "^4.17.15",
     "nodemon": "^2.0.4"
   },
